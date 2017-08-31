@@ -488,7 +488,11 @@ function executeFields(
     },
     Object.create(null)
   );
-
+  // If an error objec is returned along with this object, attach it to the
+  // final result. This will allow for partial failures on return arrays
+  if(sourceValue && sourceValue.errors){
+    finalResults.errors = sourceValue.errors;
+  }
   // If there are no promises, we can just return the object
   if (!containsPromise) {
     return finalResults;

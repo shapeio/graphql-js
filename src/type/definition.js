@@ -971,9 +971,10 @@ export class GraphQLEnumType/* <T> */ {
 
   _getValueLookup(): Map<any/* T */, GraphQLEnumValue> {
     if (!this._valueLookup) {
-      const lookup = new Map();
-      this.getValues().forEach(value => {
-        lookup.set(value.value, value);
+      var lookup = new Map();
+      this.getValues().forEach(function (value) {
+        if(!Array.isArray(value.value)){ value.value = [value.value]; }
+        for(let valu of value.value) { lookup.set(valu, value); }
       });
       this._valueLookup = lookup;
     }

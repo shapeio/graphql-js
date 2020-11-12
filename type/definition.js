@@ -593,7 +593,9 @@ var GraphQLEnumType /* <T> */ = exports.GraphQLEnumType = function () {
     if (!this._valueLookup) {
       var lookup = new Map();
       this.getValues().forEach(function (value) {
-        lookup.set(value.value, value);
+        if(!Array.isArray(value.value)){ value.value = [value.value]; }
+        for(let valu of value.value) { lookup.set(valu, value); }
+
       });
       this._valueLookup = lookup;
     }

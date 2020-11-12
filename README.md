@@ -122,13 +122,13 @@ npm install graphql@git://github.com/graphql/graphql-js.git#npm
 ### Contributing
 
 We actively welcome pull requests, learn how to
-[contribute](https://github.com/graphql/graphql-js/blob/master/CONTRIBUTING.md).
+[contribute](https://github.com/shapeio/graphql-js/blob/master/CONTRIBUTING.md).
 
 ### Changelog
 
-Changes are tracked as [GitHub releases](https://github.com/graphql/graphql-js/releases).
+Changes are tracked as [GitHub releases](https://github.com/shapeio/graphql-js/releases).
 
 ### License
 
-GraphQL is [BSD-licensed](https://github.com/graphql/graphql-js/blob/master/LICENSE).
-We also provide an additional [patent grant](https://github.com/graphql/graphql-js/blob/master/PATENTS).
+GraphQL is [BSD-licensed](https://github.com/shapeio/graphql-js/blob/master/LICENSE).
+We also provide an additional [patent grant](https://github.com/shapeio/graphql-js/blob/master/PATENTS).

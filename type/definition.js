@@ -560,9 +560,9 @@ var GraphQLEnumType /* <T> */ = exports.GraphQLEnumType = function () {
 
   GraphQLEnumType.prototype.serialize = function serialize(value /* T */) {
     var enumValue = this._getValueLookup().get(value);
+    if(!enumValue) {return "UNKNOWN VALUE: {" + value + "}"; }
     return enumValue ? enumValue.name : null;
   };
-
   GraphQLEnumType.prototype.isValidValue = function isValidValue(value) {
     return typeof value === 'string' && this._getNameLookup()[value] !== undefined;
   };

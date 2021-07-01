@@ -33,7 +33,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var __Schema = exports.__Schema = new _definition.GraphQLObjectType({
   name: '__Schema',
   isIntrospection: true,
-  description: 'A GraphQL Schema defines the capabilities of a GraphQL server. It ' + 'exposes all available types and directives on the server, as well as ' + 'the entry points for query, mutation, and subscription operations.',
+  description: 'A GraphQL Schema defines the capabilities of a GraphQL server. It ' + 'exposes all available types and directives on the server, as well as ' + 'the entry points for query, mutation, subscription, and delete operations.',
   fields: function fields() {
     return {
       types: {
@@ -65,6 +65,13 @@ var __Schema = exports.__Schema = new _definition.GraphQLObjectType({
         type: __Type,
         resolve: function resolve(schema) {
           return schema.getSubscriptionType();
+        }
+      },
+      deleteType: {
+        description: 'If this server support delete, the type that ' + 'delete operations will be rooted at.',
+        type: __Type,
+        resolve: function resolve(schema) {
+          return schema.getDeleteType();
         }
       },
       directives: {
@@ -101,7 +108,7 @@ var __Directive = exports.__Directive = new _definition.GraphQLObjectType({
         deprecationReason: 'Use `locations`.',
         type: new _definition.GraphQLNonNull(_scalars.GraphQLBoolean),
         resolve: function resolve(d) {
-          return d.locations.indexOf(_directives.DirectiveLocation.QUERY) !== -1 || d.locations.indexOf(_directives.DirectiveLocation.MUTATION) !== -1 || d.locations.indexOf(_directives.DirectiveLocation.SUBSCRIPTION) !== -1;
+          return d.locations.indexOf(_directives.DirectiveLocation.QUERY) !== -1 || d.locations.indexOf(_directives.DirectiveLocation.MUTATION) !== -1 || d.locations.indexOf(_directives.DirectiveLocation.SUBSCRIPTION) !== -1 || d.locations.indexOf(_directives.DirectiveLocation.DELETE) !== -1;
         }
       },
       onFragment: {
@@ -138,6 +145,10 @@ var __DirectiveLocation = exports.__DirectiveLocation = new _definition.GraphQLE
     SUBSCRIPTION: {
       value: _directives.DirectiveLocation.SUBSCRIPTION,
       description: 'Location adjacent to a subscription operation.'
+    },
+    DELETE: {
+      value: _directives.DirectiveLocation.DELETE,
+      description: 'Location adjacent to a delete operation.'
     },
     FIELD: {
       value: _directives.DirectiveLocation.FIELD,

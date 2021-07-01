@@ -158,6 +158,9 @@ function extendSchema(schema, documentAST) {
   var existingSubscriptionType = schema.getSubscriptionType();
   var subscriptionType = existingSubscriptionType ? getTypeFromDef(existingSubscriptionType) : null;
 
+  var existingDeleteType = schema.getDeleteType();
+  var deleteType = existingDeleteType ? getTypeFromDef(existingDeleteType) : null;
+
   // Iterate through all types, getting the type definition for each, ensuring
   // that any type not directly referenced by a field will get created.
   var typeMap = schema.getTypeMap();
@@ -175,6 +178,7 @@ function extendSchema(schema, documentAST) {
     query: queryType,
     mutation: mutationType,
     subscription: subscriptionType,
+    delete: deleteType,
     types: types,
     directives: getMergedDirectives(),
     astNode: schema.astNode

@@ -122,6 +122,7 @@ function buildASTSchema(ast) {
   var queryTypeName = void 0;
   var mutationTypeName = void 0;
   var subscriptionTypeName = void 0;
+  var deleteTypeName = void 0;
   if (schemaDef) {
     schemaDef.operationTypes.forEach(function (operationType) {
       var typeName = operationType.type.name.value;
@@ -149,6 +150,14 @@ function buildASTSchema(ast) {
           throw new Error('Specified subscription type "' + typeName + '" not found in document.');
         }
         subscriptionTypeName = typeName;
+      } else if (operationType.operation === 'delete') {
+        if (deleteTypeName) {
+          throw new Error('Must provide only one delete type in schema.');
+        }
+        if (!nodeMap[typeName]) {
+          throw new Error('Specified subscription type "' + typeName + '" not found in document.');
+        }
+        deleteTypeName = typeName;
       }
     });
   } else {
@@ -160,6 +169,9 @@ function buildASTSchema(ast) {
     }
     if (nodeMap.Subscription) {
       subscriptionTypeName = 'Subscription';
+    }
+    if (nodeMap.Delete) {
+      deleteTypeName = 'Delete';
     }
   }
 
@@ -212,6 +224,7 @@ function buildASTSchema(ast) {
     query: getObjectType(nodeMap[queryTypeName]),
     mutation: mutationTypeName ? getObjectType(nodeMap[mutationTypeName]) : null,
     subscription: subscriptionTypeName ? getObjectType(nodeMap[subscriptionTypeName]) : null,
+    delete: deleteTypeName ? getObjectType(nodeMap[deleteTypeName]) : null,
     types: types,
     directives: directives,
     astNode: schemaDef

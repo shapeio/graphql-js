@@ -259,8 +259,8 @@ function buildClientSchema(introspection) {
 
   function buildDirective(directiveIntrospection) {
     // Support deprecated `on****` fields for building `locations`, as this
+    var locations = directiveIntrospection.locations ? directiveIntrospection.locations.slice() : [].concat(!directiveIntrospection.onField ? [] : [_directives.DirectiveLocation.FIELD], !directiveIntrospection.onOperation ? [] : [_directives.DirectiveLocation.QUERY, _directives.DirectiveLocation.MUTATION, _directives.DirectiveLocation.SUBSCRIPTION, _directives.DirectiveLocation.DELETE], !directiveIntrospection.onFragment ? [] : [_directives.DirectiveLocation.FRAGMENT_DEFINITION, _directives.DirectiveLocation.FRAGMENT_SPREAD, _directives.DirectiveLocation.INLINE_FRAGMENT]);
     // is used by GraphiQL which may need to support outdated servers.
-    var locations = directiveIntrospection.locations ? directiveIntrospection.locations.slice() : [].concat(!directiveIntrospection.onField ? [] : [_directives.DirectiveLocation.FIELD], !directiveIntrospection.onOperation ? [] : [_directives.DirectiveLocation.QUERY, _directives.DirectiveLocation.MUTATION, _directives.DirectiveLocation.SUBSCRIPTION], !directiveIntrospection.onFragment ? [] : [_directives.DirectiveLocation.FRAGMENT_DEFINITION, _directives.DirectiveLocation.FRAGMENT_SPREAD, _directives.DirectiveLocation.INLINE_FRAGMENT]);
     return new _directives.GraphQLDirective({
       name: directiveIntrospection.name,
       description: directiveIntrospection.description,
@@ -282,6 +282,8 @@ function buildClientSchema(introspection) {
 
   var subscriptionType = schemaIntrospection.subscriptionType ? getObjectType(schemaIntrospection.subscriptionType) : null;
 
+  var deleteType = schemaIntrospection.deleteType ? getObjectType(schemaIntrospection.deleteType) : null;
+
   // Get the directives supported by Introspection, assuming empty-set if
   // directives were not queried for.
   var directives = schemaIntrospection.directives ? schemaIntrospection.directives.map(buildDirective) : [];
@@ -290,6 +292,7 @@ function buildClientSchema(introspection) {
   return new _schema.GraphQLSchema({
     query: queryType,
     mutation: mutationType,
+    delete: deleteType,
     subscription: subscriptionType,
     types: types,
     directives: directives

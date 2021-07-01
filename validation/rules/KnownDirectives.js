@@ -76,6 +76,8 @@ function getDirectiveLocationForASTPath(ancestors) {
           return _directives.DirectiveLocation.MUTATION;
         case 'subscription':
           return _directives.DirectiveLocation.SUBSCRIPTION;
+        case 'delete':
+          return _directives.DirectiveLocation.DELETE;
       }
       break;
     case Kind.FIELD:

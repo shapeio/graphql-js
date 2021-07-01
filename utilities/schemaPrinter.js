@@ -102,6 +102,11 @@ function printSchemaDefinition(schema) {
     operationTypes.push('  subscription: ' + subscriptionType.name);
   }
 
+  var deleteType = schema.getDeleteType();
+  if (deleteType) {
+    operationTypes.push('  delete: ' + deleteType.name);
+  }
+
   return 'schema {\n' + operationTypes.join('\n') + '\n}';
 }
 
@@ -130,6 +135,11 @@ function isSchemaOfCommonNames(schema) {
 
   var subscriptionType = schema.getSubscriptionType();
   if (subscriptionType && subscriptionType.name !== 'Subscription') {
+    return false;
+  }
+
+  var deleteType = schema.getDeleteType();
+  if (deleteType && deleteType.name !== 'Delete') {
     return false;
   }
 

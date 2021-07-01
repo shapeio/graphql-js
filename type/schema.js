@@ -78,6 +78,9 @@ var GraphQLSchema = exports.GraphQLSchema = function () {
     !(!config.subscription || config.subscription instanceof _definition.GraphQLObjectType) ? (0, _invariant2.default)(0, 'Schema subscription must be Object Type if provided but got: ' + String(config.subscription) + '.') : void 0;
     this._subscriptionType = config.subscription;
 
+    !(!config.delete || config.delete instanceof _definition.GraphQLObjectType) ? (0, _invariant2.default)(0, 'Schema delete must be Object Type if provided but got: ' + String(config.delete) + '.') : void 0;
+    this._deleteType = config.delete;
+
     !(!config.types || Array.isArray(config.types)) ? (0, _invariant2.default)(0, 'Schema types must be Array if provided but got: ' + String(config.types) + '.') : void 0;
 
     !(!config.directives || Array.isArray(config.directives) && config.directives.every(function (directive) {
@@ -88,7 +91,7 @@ var GraphQLSchema = exports.GraphQLSchema = function () {
     this.astNode = config.astNode || null;
 
     // Build type map now to detect any errors within this schema.
-    var initialTypes = [this.getQueryType(), this.getMutationType(), this.getSubscriptionType(), _introspection.__Schema];
+    var initialTypes = [this.getQueryType(), this.getMutationType(), this.getSubscriptionType(), this.getDeleteType(), _introspection.__Schema];
 
     var types = config.types;
     if (types) {
@@ -134,6 +137,10 @@ var GraphQLSchema = exports.GraphQLSchema = function () {
 
   GraphQLSchema.prototype.getSubscriptionType = function getSubscriptionType() {
     return this._subscriptionType;
+  };
+
+  GraphQLSchema.prototype.getDeleteType = function getDeleteType() {
+    return this._deleteType;
   };
 
   GraphQLSchema.prototype.getTypeMap = function getTypeMap() {

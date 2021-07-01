@@ -33,7 +33,7 @@ export const __Schema = new GraphQLObjectType({
   description:
     'A GraphQL Schema defines the capabilities of a GraphQL server. It ' +
     'exposes all available types and directives on the server, as well as ' +
-    'the entry points for query, mutation, and subscription operations.',
+    'the entry points for query, mutation, subscription, and delete operations.',
   fields: () => ({
     types: {
       description: 'A list of all types supported by this server.',
@@ -59,6 +59,12 @@ export const __Schema = new GraphQLObjectType({
                    'subscription operations will be rooted at.',
       type: __Type,
       resolve: schema => schema.getSubscriptionType()
+    },
+    deleteType: {
+      description: 'If this server support delete, the type that ' +
+                   'delete operations will be rooted at.',
+      type: __Type,
+      resolve: schema => schema.getDeleteType()
     },
     directives: {
       description: 'A list of all directives supported by this server.',
@@ -100,7 +106,8 @@ export const __Directive = new GraphQLObjectType({
       resolve: d =>
         d.locations.indexOf(DirectiveLocation.QUERY) !== -1 ||
         d.locations.indexOf(DirectiveLocation.MUTATION) !== -1 ||
-        d.locations.indexOf(DirectiveLocation.SUBSCRIPTION) !== -1
+        d.locations.indexOf(DirectiveLocation.SUBSCRIPTION) !== -1 ||
+        d.locations.indexOf(DirectiveLocation.DELETE) !== -1 
     },
     onFragment: {
       deprecationReason: 'Use `locations`.',
@@ -136,6 +143,10 @@ export const __DirectiveLocation = new GraphQLEnumType({
     SUBSCRIPTION: {
       value: DirectiveLocation.SUBSCRIPTION,
       description: 'Location adjacent to a subscription operation.'
+    },
+    DELETE: {
+      value: DirectiveLocation.DELETE,
+      description: 'Location adjacent to a delete operation.'
     },
     FIELD: {
       value: DirectiveLocation.FIELD,

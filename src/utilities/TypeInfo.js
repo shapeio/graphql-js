@@ -142,6 +142,8 @@ export class TypeInfo {
           type = schema.getMutationType();
         } else if (node.operation === 'subscription') {
           type = schema.getSubscriptionType();
+        } else if (node.operation === 'delete') {
+          type = schema.getDeleteType();
         }
         this._typeStack.push(type);
         break;

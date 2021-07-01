@@ -60,6 +60,7 @@ export class GraphQLSchema {
   _queryType: GraphQLObjectType;
   _mutationType: ?GraphQLObjectType;
   _subscriptionType: ?GraphQLObjectType;
+  _deleteType: ?GraphQLObjectType;
   _directives: Array<GraphQLDirective>;
   _typeMap: TypeMap;
   _implementations: { [interfaceName: string]: Array<GraphQLObjectType> };
@@ -95,6 +96,13 @@ export class GraphQLSchema {
     this._subscriptionType = config.subscription;
 
     invariant(
+      !config.delete || config.delete instanceof GraphQLObjectType,
+      `Schema delete must be Object Type if provided but got: ${
+        String(config.delete)}.`
+    );
+    this._deleteType = config.delete;
+
+    invariant(
       !config.types || Array.isArray(config.types),
       `Schema types must be Array if provided but got: ${String(config.types)}.`
     );
@@ -116,6 +124,7 @@ export class GraphQLSchema {
       this.getQueryType(),
       this.getMutationType(),
       this.getSubscriptionType(),
+      this.getDeleteType(),
       __Schema
     ];
 
@@ -166,6 +175,10 @@ export class GraphQLSchema {
 
   getSubscriptionType(): ?GraphQLObjectType {
     return this._subscriptionType;
+  }
+
+  getDeleteType(): ?GraphQLObjectType {
+    return this._deleteType;
   }
 
   getTypeMap(): TypeMap {
@@ -228,6 +241,7 @@ type GraphQLSchemaConfig = {
   query: GraphQLObjectType;
   mutation?: ?GraphQLObjectType;
   subscription?: ?GraphQLObjectType;
+  delete?: ?GraphQLObjectType;
   types?: ?Array<GraphQLNamedType>;
   directives?: ?Array<GraphQLDirective>;
   astNode?: ?SchemaDefinitionNode;

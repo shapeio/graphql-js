@@ -188,7 +188,7 @@ export type OperationDefinitionNode = {
 };
 
 // Note: subscription is an experimental non-spec addition.
-export type OperationTypeNode = 'query' | 'mutation' | 'subscription';
+export type OperationTypeNode = 'query' | 'mutation' | 'subscription' | 'delete';
 
 export type VariableDefinitionNode = {
   kind: 'VariableDefinition';

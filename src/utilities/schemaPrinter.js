@@ -102,6 +102,11 @@ function printSchemaDefinition(schema: GraphQLSchema): ?string {
     operationTypes.push(`  subscription: ${subscriptionType.name}`);
   }
 
+  const deleteType = schema.getDeleteType();
+  if (deleteType) {
+    operationTypes.push(`  delete: ${deleteType.name}`);
+  }
+
   return `schema {\n${operationTypes.join('\n')}\n}`;
 }
 
@@ -130,6 +135,11 @@ function isSchemaOfCommonNames(schema: GraphQLSchema): boolean {
 
   const subscriptionType = schema.getSubscriptionType();
   if (subscriptionType && subscriptionType.name !== 'Subscription') {
+    return false;
+  }
+
+  const deleteType = schema.getDeleteType();
+  if (deleteType && deleteType.name !== 'Delete') {
     return false;
   }
 

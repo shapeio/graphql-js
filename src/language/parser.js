@@ -241,7 +241,6 @@ function parseDefinition(lexer: Lexer<*>): DefinitionNode {
       case 'query':
       case 'mutation':
       case 'subscription':
-      case 'delete':
         return parseOperationDefinition(lexer);
 
       case 'fragment': return parseFragmentDefinition(lexer);
@@ -309,7 +308,6 @@ function parseOperationType(lexer: Lexer<*>): OperationTypeNode {
     case 'mutation': return 'mutation';
     // Note: subscription is an experimental non-spec addition.
     case 'subscription': return 'subscription';
-    case 'delete': return 'delete';
   }
 
   throw unexpected(lexer, operationToken);

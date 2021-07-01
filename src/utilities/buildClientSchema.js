@@ -343,7 +343,6 @@ export function buildClientSchema(
           DirectiveLocation.QUERY,
           DirectiveLocation.MUTATION,
           DirectiveLocation.SUBSCRIPTION,
-          DirectiveLocation.DELETE,
         ],
         !directiveIntrospection.onFragment ? [] : [
           DirectiveLocation.FRAGMENT_DEFINITION,
@@ -376,10 +375,6 @@ export function buildClientSchema(
     getObjectType(schemaIntrospection.subscriptionType) :
     null;
 
-  const deleteType = schemaIntrospection.deleteType ?
-    getObjectType(schemaIntrospection.deleteType) :
-    null;
-
   // Get the directives supported by Introspection, assuming empty-set if
   // directives were not queried for.
   const directives = schemaIntrospection.directives ?
@@ -391,7 +386,6 @@ export function buildClientSchema(
     query: queryType,
     mutation: mutationType,
     subscription: subscriptionType,
-    delete: deleteType,
     types,
     directives,
   });

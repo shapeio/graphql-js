@@ -17,7 +17,6 @@ export const introspectionQuery = `
       queryType { name }
       mutationType { name }
       subscriptionType { name }
-      deleteType { name }
       types {
         ...FullType
       }
@@ -114,7 +113,6 @@ export type IntrospectionSchema = {
   queryType: IntrospectionNamedTypeRef;
   mutationType: ?IntrospectionNamedTypeRef;
   subscriptionType: ?IntrospectionNamedTypeRef;
-  deleteType: ?IntrospectionNamedTypeRef;
   types: Array<IntrospectionType>;
   directives: Array<IntrospectionDirective>;
 };

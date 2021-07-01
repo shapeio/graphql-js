@@ -70,7 +70,6 @@ function getDirectiveLocationForASTPath(ancestors) {
         case 'query': return DirectiveLocation.QUERY;
         case 'mutation': return DirectiveLocation.MUTATION;
         case 'subscription': return DirectiveLocation.SUBSCRIPTION;
-        case 'delete': return DirectiveLocation.DELETE;
       }
       break;
     case Kind.FIELD: return DirectiveLocation.FIELD;

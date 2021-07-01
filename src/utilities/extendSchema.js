@@ -221,11 +221,6 @@ export function extendSchema(
     getTypeFromDef(existingSubscriptionType) :
     null;
 
-  const existingDeleteType = schema.getDeleteType();
-  const deleteType = existingDeleteType ?
-    getTypeFromDef(existingDeleteType) :
-    null;
-
   // Iterate through all types, getting the type definition for each, ensuring
   // that any type not directly referenced by a field will get created.
   const typeMap = schema.getTypeMap();
@@ -243,7 +238,6 @@ export function extendSchema(
     query: queryType,
     mutation: mutationType,
     subscription: subscriptionType,
-    delete: deleteType,
     types,
     directives: getMergedDirectives(),
     astNode: schema.astNode,

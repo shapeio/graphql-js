@@ -406,18 +406,9 @@ export function getOperationRootType(
         );
       }
       return subscriptionType;
-    case 'delete':
-      const deleteType = schema.getDeleteType();
-      if (!deleteType) {
-        throw new GraphQLError(
-          'Schema is not configured for subscriptions',
-          [ operation ]
-        );
-      }
-      return deleteType;
     default:
       throw new GraphQLError(
-        'Can only execute queries, mutations, subscriptions, and deletes',
+        'Can only execute queries, mutations and subscriptions',
         [ operation ]
       );
   }

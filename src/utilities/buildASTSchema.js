@@ -167,7 +167,6 @@ export function buildASTSchema(ast: DocumentNode): GraphQLSchema {
   let queryTypeName;
   let mutationTypeName;
   let subscriptionTypeName;
-  let deleteTypeName;
   if (schemaDef) {
     schemaDef.operationTypes.forEach(operationType => {
       const typeName = operationType.type.name.value;
@@ -201,16 +200,6 @@ export function buildASTSchema(ast: DocumentNode): GraphQLSchema {
           );
         }
         subscriptionTypeName = typeName;
-      } else if (operationType.operation === 'delete') {
-        if (deleteTypeName) {
-          throw new Error('Must provide only one delete type in schema.');
-        }
-        if (!nodeMap[typeName]) {
-          throw new Error(
-            `Specified delete type "${typeName}" not found in document.`
-          );
-        }
-        deleteTypeName = typeName;
       }
     });
   } else {
@@ -222,9 +211,6 @@ export function buildASTSchema(ast: DocumentNode): GraphQLSchema {
     }
     if (nodeMap.Subscription) {
       subscriptionTypeName = 'Subscription';
-    }
-    if (nodeMap.Delete) {
-      deleteTypeName = 'Delete';
     }
   }
 
@@ -274,9 +260,6 @@ export function buildASTSchema(ast: DocumentNode): GraphQLSchema {
       null,
     subscription: subscriptionTypeName ?
       getObjectType(nodeMap[subscriptionTypeName]) :
-      null,
-    delete: deleteTypeName ?
-      getObjectType(nodeMap[deleteTypeName]) :
       null,
     types,
     directives,
